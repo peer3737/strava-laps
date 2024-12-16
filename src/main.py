@@ -44,12 +44,8 @@ log.addFilter(correlation_filter)
 
 
 def lambda_handler(event, context):
-    body = event.get("body")
-    log.info(body)
-    parsed_body = json.loads(body)
-    activity_id = parsed_body.get("activity_id")
+    activity_id = event.get("activity_id")
     log.info(f"Start handling laps for activity {activity_id}")
-    exit()
     database_id = os.getenv('DATABASE_ID')
     database_settings = aws.dynamodb_query(table='database_settings', id=database_id)
     db_host = database_settings[0]['host']
